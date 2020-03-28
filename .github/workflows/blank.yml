@@ -34,8 +34,7 @@ jobs:
               "yugabyteci/yb_build_infra_centos7:v2020-03-28T04_39_36" \
               bash -c '
                 yum install -y bison gperf
-                ctng_version=1.23.0
-                ctng_tag=crosstool-ng-$ctng_ver
+                ctng_tag=crosstool-ng-1.23.0
                 git clone https://github.com/crosstool-ng/crosstool-ng --branch "$ctng_tag" --depth 1 "$ctng_tag"
                 cd "$ctng_tag"
                 ./bootstrap
