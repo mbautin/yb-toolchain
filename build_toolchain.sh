@@ -73,7 +73,8 @@ else
   # Hide time output with a rotating character, e.g.
   # [63:39] /
 
-  $sudo_cmd "$ctng_prefix/bin/ct-ng" build 2>&1 | grep -E -v '^\[[0-9]{2}:[0-9]{3}\] [/\\-|]$'
+  $sudo_cmd "$ctng_prefix/bin/ct-ng" build 2>&1 | \
+    grep -E -v '^\[[0-9]{2}:[0-9]{3}\] [/\\-|][[:space:]]*$'
 fi
 
 archive_tarball_name=$archive_dir_name.tar.gz
