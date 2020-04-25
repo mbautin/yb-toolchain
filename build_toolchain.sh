@@ -13,4 +13,6 @@ make
 make install
 
 cd ct-ng-config
+version=$( date +%Y%m%d%H%M%S )
+export CT_PREFIX_DIR=/opt/yb-build/x-tools/yb-x-tools-$version
 "$ctng_prefix/bin/ct-ng" build
