@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euo pipefail -x
+
+yb_toolchain_repo_dir=$PWD
 
 yum install -y flex texinfo help2man gperf bison
 ctng_tag=crosstool-ng-1.24.0
@@ -12,7 +14,7 @@ ctng_prefix=/usr/share/$ctng_tag
 make
 make install
 
-cd ct-ng-config
+cd "$yb_toolchain_repo_dir/ct-ng-config"
 version=$( date +%Y%m%d%H%M%S )
 export CT_PREFIX_DIR=/opt/yb-build/x-tools/yb-x-tools-$version
 "$ctng_prefix/bin/ct-ng" build
