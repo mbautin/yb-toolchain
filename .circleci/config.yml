@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    machine:
+      enabled: true
+
+    steps:
+      - checkout
+
+      - name: Build the toolchain
+        run: |
+          df -H .
+          checkout_dir=$PWD
+          echo "Building in directory: $checkout_dir"
+          set -euo pipefail
+          build_dir_in_container=/root/yb-toolchain
+          docker run \
+            -i \
+            "-w=$build_dir_in_container" \
+            --mount type=bind,source="$PWD",target="$build_dir_in_container" \
+                "yugabyteci/yb_build_infra_centos7:v2020-03-28T04_39_36" \
+                bash -c '
+                  yum install -y flex texinfo help2man gperf bison 
+                  ctng_tag=crosstool-ng-1.24.0
+                  git clone https://github.com/crosstool-ng/crosstool-ng --branch "$ctng_tag" --depth 1 "$ctng_tag"
+                  cd "$ctng_tag"
+                  ./bootstrap
+                  ctng_install_dir=/usr/share/$ctng_tag
+                  ./configure --prefix=$ctng_install_dir
+                  make
+                  make install
+                '
