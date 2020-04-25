@@ -18,9 +18,9 @@ fi
 readonly git_sha1=$( git rev-parse HEAD )
 echo "SHA1: $git_sha1"
 
-user=$USER
+user=$( whoami )
 switch_user=false
-if [[ $USER == "root" ]]; then
+if [[ $user == "root" ]]; then
   user=yugabyteci
   switch_user=true
 fi
@@ -62,15 +62,14 @@ fi
 archive_dir_name=yb-toolchain-$tag
 export CT_PREFIX_DIR=$toolchain_parent_dir/$archive_dir_name
 
-sudo_cmd=""
-if "$switch_user"; then
-  sudo_cmd="sudo -u $user -E"
-fi
-
 if [[ ${YB_TOOLCHAIN_ONLY_TEST_UPLOAD:-} == "1" ]]; then
   mkdir -p "$CT_PREFIX_DIR"
   touch "$CT_PREFIX_DIR/hello_world.txt"
 else
+  sudo_cmd=""
+  if "$switch_user"; then
+    sudo_cmd="sudo -u $user -E"
+  fi
   # Hide time output with a rotating character, e.g.
   # [63:39] /
 

@@ -15,6 +15,7 @@ jobs:
           build_dir_in_container=/opt/yb-build/tmp/yb-toolchain
           docker run \
             -i \
+            -e GITHUB_TOKEN \
             "-w=$build_dir_in_container" \
             --mount type=bind,source="$PWD",target="$build_dir_in_container" \
                 "yugabyteci/yb_build_infra_centos7:v2020-03-28T04_39_36" \
