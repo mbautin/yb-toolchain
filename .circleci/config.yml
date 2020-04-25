@@ -7,8 +7,7 @@ jobs:
     steps:
       - checkout
 
-      - name: Build the toolchain
-        run: |
+      - run: |
           df -H .
           checkout_dir=$PWD
           echo "Building in directory: $checkout_dir"
