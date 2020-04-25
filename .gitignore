@@ -1,0 +1,5 @@
+*.sw?
+build/
+ct-ng-config/.build
+ct-ng-config/build.log
+ct-ng-config/build.log.*
